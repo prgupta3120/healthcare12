@@ -1,1 +1,1 @@
-AI chatbot  that can assist users with basic health related issues and suggest them remedies based on their symptoms
+A chatbot that can assist users with basic health-related queries and suggest remedies or actions based on symptoms. Ensuring accurate diagnosis suggestions and handling sensitive user data securely.
