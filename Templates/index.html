@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Healthcare Chatbot</h1>
+        <div id="chat-window">
+            <div id="output"></div>
+        </div>
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#send-btn').on('click', function () {
+                let userMessage = $('#user-input').val();
+                console.log("User input:", userMessage); // Log user input
+
+                $('#output').append('<div class="user-message">You: ' + userMessage + '</div>');
+                $('#user-input').val('');  // Clear input box
+
+                // Send message to backend using POST
+                $.post('/get_response', { message: userMessage }, function (data) {
+                    console.log("Response from server:", data); // Log server response
+                    $('#output').append('<div class="bot-response">Bot: ' + data.response + '</div>');
+                    $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);  // Scroll to bottom of chat
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("Request failed: " + textStatus + ", " + errorThrown); // Log any request error
+                    $('#output').append('<div class="bot-response">Error: Could not reach chatbot backend.</div>');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+Tec code
